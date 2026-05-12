@@ -25,18 +25,16 @@ jobs:
       - name: Install Newman HTML Reporter
         run: npm install -g newman-reporter-htmlextra
 
+      - name: Create results folder
+        run: mkdir -p results
+
       - name: Run Dog API Tests
         env:
           DOG_API_KEY: ${{ secrets.DOG_API_KEY }}
-        run: |
-          newman run "postman/Dog API Test Suite.postman_collection.json" \
-          --environment "postman/Dog API Dev.postman_environment.json" \
-          --env-var "dog_api_key=$DOG_API_KEY" \
-          --reporters cli,htmlextra \
-          --reporter-htmlextra-export results/report.html
+        run: newman run "postman/Dog API Test Suite.postman_collection.json" --environment "postman/Dog API Dev.postman_environment.json" --env-var "dog_api_key=$DOG_API_KEY" --reporters cli,htmlextra --reporter-htmlextra-export results/report.html
 
       - name: Upload test results
-        uses: uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: newman-report
