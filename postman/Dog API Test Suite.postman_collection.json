@@ -1,0 +1,814 @@
+{
+  "info": {
+    "_postman_id": "94cda602-7877-4eb9-b6c8-7e53e020f83a",
+    "name": "Dog API Test Suite",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "22266358",
+    "_collection_link": "https://go.postman.co/collection/22266358-94cda602-7877-4eb9-b6c8-7e53e020f83a?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Get All Breeds",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response is an array\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Array is not empty\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json.length).to.be.above(0);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Each breed has required fields\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    json.forEach(function(breed) {\r",
+              "        pm.expect(breed).to.have.property(\"id\");\r",
+              "        pm.expect(breed).to.have.property(\"name\");\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response time is under 3000ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(3500);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://api.thedogapi.com/v1/breeds",
+          "protocol": "https",
+          "host": [
+            "api",
+            "thedogapi",
+            "com"
+          ],
+          "path": [
+            "v1",
+            "breeds"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Breed by ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Breed has correct fields\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json).to.have.property(\"id\");\r",
+              "    pm.expect(json).to.have.property(\"name\");\r",
+              "    pm.expect(json).to.have.property(\"temperament\");\r",
+              "    pm.expect(json).to.have.property(\"life_span\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Breed id exists and is not empty\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json.id).to.exist;\r",
+              "    pm.expect(String(json.id)).to.not.be.empty;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Breed name is a string\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json.name).to.be.a(\"string\");\r",
+              "    pm.expect(json.name).to.not.be.empty;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response time is under 3000ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://api.thedogapi.com/v1/breeds/1",
+          "protocol": "https",
+          "host": [
+            "api",
+            "thedogapi",
+            "com"
+          ],
+          "path": [
+            "v1",
+            "breeds",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Search Breed by Name",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response is an array\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Search results contain labrador\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    const names = json.map(b => b.name.toLowerCase());\r",
+              "    const found = names.some(name => name.includes(\"labrador\"));\r",
+              "    pm.expect(found).to.be.true;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Each result has name and id\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    json.forEach(function(breed) {\r",
+              "        pm.expect(breed).to.have.property(\"id\");\r",
+              "        pm.expect(breed).to.have.property(\"name\");\r",
+              "    });\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://api.thedogapi.com/v1/breeds/search?q=labrador",
+          "protocol": "https",
+          "host": [
+            "api",
+            "thedogapi",
+            "com"
+          ],
+          "path": [
+            "v1",
+            "breeds",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "labrador"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Images",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response is an array\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Returns images\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json).to.be.an(\"array\");\r",
+              "    pm.expect(json.length).to.be.above(0);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Each image has id and url\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    json.forEach(function(image) {\r",
+              "        pm.expect(image).to.have.property(\"id\");\r",
+              "        pm.expect(image).to.have.property(\"url\");\r",
+              "        pm.expect(image.url).to.include(\"https\");\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response time is under 3000ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://api.thedogapi.com/v1/images/search?limit=10",
+          "protocol": "https",
+          "host": [
+            "api",
+            "thedogapi",
+            "com"
+          ],
+          "path": [
+            "v1",
+            "images",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "10"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Image ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Image has required fields\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json).to.have.property(\"id\");\r",
+              "    pm.expect(json).to.have.property(\"url\");\r",
+              "    pm.expect(json).to.have.property(\"width\");\r",
+              "    pm.expect(json).to.have.property(\"height\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Image URL is a valid https link\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json.url).to.be.a(\"string\");\r",
+              "    pm.expect(json.url).to.include(\"https\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Width and height are numbers\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json.width).to.be.a(\"number\");\r",
+              "    pm.expect(json.height).to.be.a(\"number\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://api.thedogapi.com/v1/images/BJa4kxc4X",
+          "protocol": "https",
+          "host": [
+            "api",
+            "thedogapi",
+            "com"
+          ],
+          "path": [
+            "v1",
+            "images",
+            "BJa4kxc4X"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get  A Random Dog Image",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Returns exactly 1 image\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json).to.be.an(\"array\");\r",
+              "    pm.expect(json.length).to.equal(1);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Image has url and id\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json[0]).to.have.property(\"id\");\r",
+              "    pm.expect(json[0]).to.have.property(\"url\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Image URL contains https\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json[0].url).to.include(\"https\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://api.thedogapi.com/v1/images/search?limit=1",
+          "protocol": "https",
+          "host": [
+            "api",
+            "thedogapi",
+            "com"
+          ],
+          "path": [
+            "v1",
+            "images",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Images By Breed",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response is an array\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Each image has breeds data\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    json.forEach(function(image) {\r",
+              "        pm.expect(image).to.have.property(\"breeds\");\r",
+              "        pm.expect(image.breeds).to.be.an(\"array\");\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response time is under 3000ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://api.thedogapi.com/v1/images/search?breed_ids=1&limit=5",
+          "protocol": "https",
+          "host": [
+            "api",
+            "thedogapi",
+            "com"
+          ],
+          "path": [
+            "v1",
+            "images",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "breed_ids",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "5"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add a Favourite",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 or 201\", function () {\r",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response contains favourite id\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json).to.have.property(\"id\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Save favourite id to environment\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.environment.set(\"favourite_id\", json.id);\r",
+              "    pm.globals.set(\"favourite_id\", json.id);\r",
+              "    console.log(\"Saved favourite_id:\", json.id);\r",
+              "    pm.expect(json.id).to.be.a(\"number\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response contains success message or id\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    const isSuccess = json.message === \"SUCCESS\" || json.id;\r",
+              "    pm.expect(isSuccess).to.be.ok;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response time is under 3000ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "const baseUrl = \"https://api.thedogapi.com/v1\";\r",
+              "const apiKey = pm.environment.get(\"dog_api_key\");\r",
+              "const favId = pm.environment.get(\"favourite_id\");\r",
+              "\r",
+              "// Clean up existing favourite first\r",
+              "if (favId) {\r",
+              "    pm.sendRequest({\r",
+              "        url: `${baseUrl}/favourites/${favId}`,\r",
+              "        method: \"DELETE\",\r",
+              "        header: { \"x-api-key\": apiKey }\r",
+              "    }, function (err, res) {\r",
+              "        console.log(\"Cleaned up favourite:\", favId);\r",
+              "    });\r",
+              "}\r",
+              "\r",
+              "// Fetch a valid image ID from breeds endpoint\r",
+              "pm.sendRequest({\r",
+              "    url: `${baseUrl}/images/search?limit=1&breed_ids=1`,\r",
+              "    method: \"GET\",\r",
+              "    header: { \"x-api-key\": apiKey }\r",
+              "}, function (err, res) {\r",
+              "    const image = res.json()[0];\r",
+              "    pm.environment.set(\"random_image_id\", image.id);\r",
+              "    console.log(\"Got valid image ID:\", image.id);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"image_id\": \"nS5aCK4L2I\",\r\n  \"sub_id\": \"my-portfolio-project\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://api.thedogapi.com/v1/favourites",
+          "protocol": "https",
+          "host": [
+            "api",
+            "thedogapi",
+            "com"
+          ],
+          "path": [
+            "v1",
+            "favourites"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Favourites",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response is an array\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Each favourite has required fields\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    json.forEach(function(fav) {\r",
+              "        pm.expect(fav).to.have.property(\"id\");\r",
+              "        pm.expect(fav).to.have.property(\"image_id\");\r",
+              "        pm.expect(fav).to.have.property(\"created_at\");\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response time is under 3000ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://api.thedogapi.com/v1/favourites",
+          "protocol": "https",
+          "host": [
+            "api",
+            "thedogapi",
+            "com"
+          ],
+          "path": [
+            "v1",
+            "favourites"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete a Favourite",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Delete was successful\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    const isSuccess =\r",
+              "        json.message === \"SUCCESS\" ||\r",
+              "        Object.keys(json).length === 0;\r",
+              "    pm.expect(isSuccess).to.be.true;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response time is under 3000ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "pm.environment.set(\"favourite_id\", pm.globals.get(\"favourite_id\"));"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "https://api.thedogapi.com/v1/favourites/{{favourite_id}}",
+          "protocol": "https",
+          "host": [
+            "api",
+            "thedogapi",
+            "com"
+          ],
+          "path": [
+            "v1",
+            "favourites",
+            "{{favourite_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Breeds Paginated",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Returns exactly 5 breeds\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json).to.be.an(\"array\");\r",
+              "    pm.expect(json.length).to.equal(5);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Each breed has id and name\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    json.forEach(function(breed) {\r",
+              "        pm.expect(breed).to.have.property(\"id\");\r",
+              "        pm.expect(breed).to.have.property(\"name\");\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Breed names are strings\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    json.forEach(function(breed) {\r",
+              "        pm.expect(breed.name).to.be.a(\"string\");\r",
+              "        pm.expect(breed.name).to.not.be.empty;\r",
+              "    });\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://api.thedogapi.com/v1/breeds?limit=5&page=0",
+          "protocol": "https",
+          "host": [
+            "api",
+            "thedogapi",
+            "com"
+          ],
+          "path": [
+            "v1",
+            "breeds"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "5"
+            },
+            {
+              "key": "page",
+              "value": "0"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "No Auth - expect 401",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 401\", function () {\r",
+              "    pm.response.to.have.status(401);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Unauthorised message returned\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json).to.have.property(\"message\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"No data returned for unauthorised request\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json).to.not.have.property(\"data\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://api.thedogapi.com/v1/favourites",
+          "protocol": "https",
+          "host": [
+            "api",
+            "thedogapi",
+            "com"
+          ],
+          "path": [
+            "v1",
+            "favourites"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "value",
+        "value": "{{dog_api_key}}",
+        "type": "string"
+      },
+      {
+        "key": "key",
+        "value": "x-api-key",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}
