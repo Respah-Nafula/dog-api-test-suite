@@ -36,7 +36,7 @@ jobs:
           --reporter-htmlextra-export results/report.html
 
       - name: Upload test results
-        uses: actions/upload-artifact@v3
+        uses: uses: actions/upload-artifact@v4
         if: always()
         with:
           name: newman-report
