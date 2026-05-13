@@ -1,0 +1,351 @@
+{
+  "info": {
+    "_postman_id": "15f2eb02-6a99-490e-8fea-09bc7b93db5f",
+    "name": "Dog API Mock Server",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "22266358",
+    "_collection_link": "https://go.postman.co/collection/22266358-15f2eb02-6a99-490e-8fea-09bc7b93db5f?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "404 Breed not found",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 404\", function () {\r",
+              "    pm.response.to.have.status(404);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Error message is correct\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json.message).to.equal(\"NO_BREED_FOUND_MATCHING_ID\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response has statusCode field\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json).to.have.property(\"statusCode\");\r",
+              "    pm.expect(json.statusCode).to.equal(404);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://77c24921-dc7e-4193-869b-eb007ef45a6d.mock.pstmn.io/v1/breeds/99999",
+          "protocol": "https",
+          "host": [
+            "77c24921-dc7e-4193-869b-eb007ef45a6d",
+            "mock",
+            "pstmn",
+            "io"
+          ],
+          "path": [
+            "v1",
+            "breeds",
+            "99999"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Breed not found",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://77c24921-dc7e-4193-869b-eb007ef45a6d.mock.pstmn.io/v1/breeds/99999",
+              "protocol": "https",
+              "host": [
+                "77c24921-dc7e-4193-869b-eb007ef45a6d",
+                "mock",
+                "pstmn",
+                "io"
+              ],
+              "path": [
+                "v1",
+                "breeds",
+                "99999"
+              ]
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "description": "",
+              "type": "text"
+            }
+          ],
+          "cookie": [],
+          "body": "{\r\n    \"statusCode\": 404,\r\n    \"message\": \"NO_BREED_FOUND_MATCHING_ID\",\r\n    \"error\": \"Not Found\"\r\n}"
+        }
+      ]
+    },
+    {
+      "name": "401 Unauthorised",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 401\", function () {\r",
+              "    pm.response.to.have.status(401);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Error message is correct\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json.message).to.equal(\"INVALID_API_KEY\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response has error field\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json).to.have.property(\"error\");\r",
+              "    pm.expect(json.error).to.equal(\"Unauthorized\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://77c24921-dc7e-4193-869b-eb007ef45a6d.mock.pstmn.io/v1/breeds",
+          "protocol": "https",
+          "host": [
+            "77c24921-dc7e-4193-869b-eb007ef45a6d",
+            "mock",
+            "pstmn",
+            "io"
+          ],
+          "path": [
+            "v1",
+            "breeds"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Unauthorised",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://77c24921-dc7e-4193-869b-eb007ef45a6d.mock.pstmn.io/v1/breeds",
+              "protocol": "https",
+              "host": [
+                "77c24921-dc7e-4193-869b-eb007ef45a6d",
+                "mock",
+                "pstmn",
+                "io"
+              ],
+              "path": [
+                "v1",
+                "breeds"
+              ]
+            }
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "description": "",
+              "type": "text"
+            }
+          ],
+          "cookie": [],
+          "body": "{\r\n    \"statusCode\": 401,\r\n    \"message\": \"INVALID_API_KEY\",\r\n    \"error\": \"Unauthorized\"\r\n}"
+        }
+      ]
+    },
+    {
+      "name": "429 Rate Limited",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 429\", function () {\r",
+              "    pm.response.to.have.status(429);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Error message is correct\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json.message).to.equal(\"RATE_LIMIT_EXCEEDED\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response includes retry_after\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json).to.have.property(\"retry_after\");\r",
+              "    pm.expect(json.retry_after).to.be.a(\"number\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://77c24921-dc7e-4193-869b-eb007ef45a6d.mock.pstmn.io/v1/images/search",
+          "protocol": "https",
+          "host": [
+            "77c24921-dc7e-4193-869b-eb007ef45a6d",
+            "mock",
+            "pstmn",
+            "io"
+          ],
+          "path": [
+            "v1",
+            "images",
+            "search"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Rate Limited",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://77c24921-dc7e-4193-869b-eb007ef45a6d.mock.pstmn.io/v1/images/search",
+              "protocol": "https",
+              "host": [
+                "77c24921-dc7e-4193-869b-eb007ef45a6d",
+                "mock",
+                "pstmn",
+                "io"
+              ],
+              "path": [
+                "v1",
+                "images",
+                "search"
+              ]
+            }
+          },
+          "status": "Too Many Requests",
+          "code": 429,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "description": "",
+              "type": "text"
+            }
+          ],
+          "cookie": [],
+          "body": "{\r\n    \"statusCode\": 429,\r\n    \"message\": \"RATE_LIMIT_EXCEEDED\",\r\n    \"error\": \"Too Many Requests\",\r\n    \"retry_after\": 60\r\n}"
+        }
+      ]
+    },
+    {
+      "name": "500 Server Error",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 500\", function () {\r",
+              "    pm.response.to.have.status(500);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Error message is correct\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json.message).to.equal(\"INTERNAL_SERVER_ERROR\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response has error field\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json).to.have.property(\"error\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://77c24921-dc7e-4193-869b-eb007ef45a6d.mock.pstmn.io/v1/favourites",
+          "protocol": "https",
+          "host": [
+            "77c24921-dc7e-4193-869b-eb007ef45a6d",
+            "mock",
+            "pstmn",
+            "io"
+          ],
+          "path": [
+            "v1",
+            "favourites"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Server Error",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://77c24921-dc7e-4193-869b-eb007ef45a6d.mock.pstmn.io/v1/favourites",
+              "protocol": "https",
+              "host": [
+                "77c24921-dc7e-4193-869b-eb007ef45a6d",
+                "mock",
+                "pstmn",
+                "io"
+              ],
+              "path": [
+                "v1",
+                "favourites"
+              ]
+            }
+          },
+          "code": 500,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "description": "",
+              "type": "text"
+            }
+          ],
+          "cookie": [],
+          "body": "{\r\n    \"statusCode\": 500,\r\n    \"message\": \"INTERNAL_SERVER_ERROR\",\r\n    \"error\": \"Something went wrong on our end\"\r\n}"
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "url",
+      "value": "https://77c24921-dc7e-4193-869b-eb007ef45a6d.mock.pstmn.io"
+    }
+  ]
+}
