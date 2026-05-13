@@ -176,8 +176,7 @@ Every push to the `main` branch automatically:
 
 
 
-\[!\[Dog API Tests](https://github.com/Respah-Nafula/dog-api-test-suite/actions/workflows/api-tests.yml/badge.svg)](https://github.com/Respah-Nafula/dog-api-test-suite/actions)
-
+[![Dog API Tests](https://github.com/Respah-Nafula/dog-api-test-suite/actions/workflows/api-tests.yml/badge.svg)](https://github.com/Respah-Nafula/dog-api-test-suite/actions/workflows/api-tests.yml)
 
 
 \---
