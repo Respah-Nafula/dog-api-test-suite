@@ -1,0 +1,10 @@
+2026-05-20 23:07:03,730 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2026-05-20 23:07:03,759 INFO o.a.j.JMeter: Loading user properties from: C:\jmeter\apache-jmeter-5.6.3\bin\user.properties
+2026-05-20 23:07:03,761 INFO o.a.j.JMeter: Loading system properties from: C:\jmeter\apache-jmeter-5.6.3\bin\system.properties
+2026-05-20 23:07:03,762 ERROR o.a.j.JMeter: An error occurred: 
+java.lang.IllegalArgumentException: Unknown arg: jmx
+	at org.apache.jmeter.JMeter.initializeProperties(JMeter.java:796) ~[ApacheJMeter_core%20(2).jar:5.6.3]
+	at org.apache.jmeter.JMeter.start(JMeter.java:379) [ApacheJMeter_core%20(2).jar:5.6.3]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[?:?]
+	at org.apache.jmeter.NewDriver.main(NewDriver.java:259) [ApacheJMeter.jar:5.6.3]

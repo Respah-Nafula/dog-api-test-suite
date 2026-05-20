@@ -1,0 +1,11 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1779279803560,1240,Get all Breeds,200,OK,Dog API Users 1-1,text,true,,604803,210,1,1,https://api.thedogapi.com/v1/breeds,663,0,163
+1779279804801,423,Get Breed by ID,200,OK,Dog API Users 1-1,text,true,,1596,212,1,1,https://api.thedogapi.com/v1/breeds/1,423,0,0
+1779279805228,416,Search Breed by Name,200,OK,Dog API Users 1-1,text,true,,1715,228,1,1,https://api.thedogapi.com/v1/breeds/search?q=labrador,416,0,0
+1779279805644,299,Get Random Image,Non HTTP response code: java.net.SocketException,Non HTTP response message: Socket closed,Dog API Users 1-1,text,false,"Test failed: code expected to equal /
+
+****** received  : [[[Non HTTP response code: java.net.SocketException]]]
+
+****** comparison: [[[200                                             ]]]
+
+/",3248,0,1,1,https://api.thedogapi.com/v1/images/search?limit=1,0,0,0
