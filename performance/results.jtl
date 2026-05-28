@@ -1,0 +1,7 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1779903432550,5186,Get all Breeds,200,OK,Dog API Users 1-1,text,false,"The operation lasted too long: It took 5,186 milliseconds, but should not have lasted longer than 5,000 milliseconds.",604794,210,1,1,https://api.thedogapi.com/v1/breeds,3711,0,2431
+1779903437744,370,Get Breed by ID,200,OK,Dog API Users 1-1,text,true,,1588,212,1,1,https://api.thedogapi.com/v1/breeds/1,370,0,0
+1779903438116,358,Search Breed by Name,200,OK,Dog API Users 1-1,text,true,,1717,228,1,1,https://api.thedogapi.com/v1/breeds/search?q=labrador,358,0,0
+1779903438477,331,Get Random Image,200,OK,Dog API Users 1-1,text,true,,945,225,1,1,https://api.thedogapi.com/v1/images/search?limit=1,331,0,0
+1779903438809,389,Get All Favourites,200,OK,Dog API Users 1-1,text,true,,1939,214,1,1,https://api.thedogapi.com/v1/favourites,389,0,0
+1779903439199,1095,HTTP Request,200,OK,Dog API Users 1-1,text,true,,604797,210,1,1,https://api.thedogapi.com/v1/breeds,413,0,0
