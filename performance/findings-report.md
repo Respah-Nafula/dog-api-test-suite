@@ -2,13 +2,13 @@
 
 
 
-\*\*Tester:\*\* Respah Nafula  
+\*\*Tester:\*\* Respah Nafula
 
-\*\*Date:\*\* May 12, 2026  
+\*\*Date:\*\* May 12, 2026
 
-\*\*Tool:\*\* k6 v2.0.0  
+\*\*Tool:\*\* k6 v2.0.0
 
-\*\*API:\*\* The Dog API (https://api.thedogapi.com/v1)  
+\*\*API:\*\* The Dog API (https://api.thedogapi.com/v1)
 
 
 
@@ -20,7 +20,7 @@
 
 
 
-A load test was conducted against three endpoint groups of The Dog 
+A load test was conducted against three endpoint groups of The Dog
 
 API to assess performance under simulated concurrent user traffic.
 
@@ -102,11 +102,11 @@ API to assess performance under simulated concurrent user traffic.
 
 \### Finding 1 — API performs well under load ✅
 
-All three endpoint groups maintained response times well below 
+All three endpoint groups maintained response times well below
 
-the 3000ms threshold even at peak load of 20 concurrent users. 
+the 3000ms threshold even at peak load of 20 concurrent users.
 
-The p(95) of 595ms means 95% of all users received a response 
+The p(95) of 595ms means 95% of all users received a response
 
 in under 600ms — an excellent user experience.
 
@@ -116,7 +116,7 @@ in under 600ms — an excellent user experience.
 
 Out of 1755 total requests, zero failed. The error rate of 0.00%
 
-demonstrates the API handles concurrent traffic reliably without 
+demonstrates the API handles concurrent traffic reliably without
 
 dropping requests or returning unexpected errors.
 
@@ -124,13 +124,13 @@ dropping requests or returning unexpected errors.
 
 \### Finding 3 — Breeds endpoint has highest latency ⚠️
 
-The Breeds endpoint showed the highest maximum response time 
+The Breeds endpoint showed the highest maximum response time
 
-at 1247ms — significantly higher than its average of 512ms. 
+at 1247ms — significantly higher than its average of 512ms.
 
-This suggests occasional slowdowns under peak load, possibly 
+This suggests occasional slowdowns under peak load, possibly
 
-due to the larger payload size of breed data compared to other 
+due to the larger payload size of breed data compared to other
 
 endpoints. Worth monitoring in production.
 
@@ -138,9 +138,9 @@ endpoints. Worth monitoring in production.
 
 \### Finding 4 — Favourites endpoint is fastest ✅
 
-The Favourites endpoint was the fastest overall with an average 
+The Favourites endpoint was the fastest overall with an average
 
-of 453ms and p(95) of 551ms. It also had the lowest maximum 
+of 453ms and p(95) of 551ms. It also had the lowest maximum
 
 response time at 733ms, showing very consistent performance.
 
@@ -148,9 +148,9 @@ response time at 733ms, showing very consistent performance.
 
 \### Finding 5 — Response times are consistent ✅
 
-The gap between average (475ms) and p(95) (595ms) response times 
+The gap between average (475ms) and p(95) (595ms) response times
 
-is only 120ms — indicating very consistent performance with no 
+is only 120ms — indicating very consistent performance with no
 
 major outliers or random spikes affecting most users.
 
@@ -164,35 +164,35 @@ major outliers or random spikes affecting most users.
 
 
 
-1\. \*\*Monitor the Breeds endpoint\*\* under higher load — the 1247ms 
+1\. \*\*Monitor the Breeds endpoint\*\* under higher load — the 1247ms
 
-&#x20;  maximum suggests it may degrade faster than other endpoints 
+&#x20;  maximum suggests it may degrade faster than other endpoints
 
 &#x20;  as traffic increases beyond 20 concurrent users.
 
 
 
-2\. \*\*Consider caching breed data\*\* — since breed information rarely 
+2\. \*\*Consider caching breed data\*\* — since breed information rarely
 
-&#x20;  changes, implementing a cache layer could reduce the Breeds 
+&#x20;  changes, implementing a cache layer could reduce the Breeds
 
 &#x20;  endpoint maximum response time significantly.
 
 
 
-3\. \*\*Run a stress test\*\* to find the breaking point — this load test 
+3\. \*\*Run a stress test\*\* to find the breaking point — this load test
 
-&#x20;  used a maximum of 20 virtual users. A stress test ramping to 
+&#x20;  used a maximum of 20 virtual users. A stress test ramping to
 
-&#x20;  100-200 users would identify the API's upper limits before 
+&#x20;  100-200 users would identify the API's upper limits before
 
 &#x20;  production deployment.
 
 
 
-4\. \*\*Rate limiting\*\* — the OpenWeather API showed rate limiting at 
+4\. \*\*Rate limiting\*\* — the OpenWeather API showed rate limiting at
 
-&#x20;  \~40 req/sec. The Dog API handled 9.6 req/sec without issues 
+&#x20;  \~40 req/sec. The Dog API handled 9.6 req/sec without issues
 
 &#x20;  but rate limits should be verified at higher throughput.
 
@@ -230,11 +230,53 @@ major outliers or random spikes affecting most users.
 
 
 
-The Dog API demonstrates solid performance under a 20 concurrent 
+The Dog API demonstrates solid performance under a 20 concurrent
 
-user load. All thresholds were met with comfortable margins. 
+user load. All thresholds were met with comfortable margins.
 
-The API is production-ready for moderate traffic levels. 
+The API is production-ready for moderate traffic levels.
 
 Further stress testing is recommended before high-traffic launches.
+
+\## JMeter Test Results
+
+
+
+\### Test Configuration
+
+| Setting | Value |
+
+|---|---|
+
+| Tool | Apache JMeter 5.6.3 |
+
+| Virtual users | 10 |
+
+| Requests tested | 5 endpoints |
+
+| Think time | 1000ms ± 500ms |
+
+| Data driven | CSV with 10 breed names |
+
+
+
+\### Key Findings
+
+\- All endpoints returned 200 OK consistently
+
+\- Get All Breeds slowest at \~3200ms due to 604KB payload
+
+\- All other endpoints responded under 600ms
+
+\- Zero errors across all requests
+
+\- Correlation successfully chained breed ID between requests
+
+
+
+\### Recommendation
+
+Implement caching for the /v1/breeds endpoint to reduce
+
+the 604KB payload response time in production.
 
